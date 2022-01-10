@@ -1,9 +1,8 @@
-.App {
-  display: flex;
-  max-width: 1200px;
+.map {
   width: 100%;
-  padding: 0 10px;
-  margin: auto;
+  height: 50vw;
+  padding: 0;
+  margin: 0;
 }
 
 @media screen and (max-width: 1024px) {
