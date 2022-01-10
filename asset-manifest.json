@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.7a812e17.css",
-    "main.js": "/static/js/main.837b4b70.js",
-    "static/js/787.5515aeb4.chunk.js": "/static/js/787.5515aeb4.chunk.js",
-    "index.html": "/index.html",
-    "main.7a812e17.css.map": "/static/css/main.7a812e17.css.map",
-    "main.837b4b70.js.map": "/static/js/main.837b4b70.js.map",
-    "787.5515aeb4.chunk.js.map": "/static/js/787.5515aeb4.chunk.js.map"
+    "main.css": "/funbox-test/static/css/main.7a812e17.css",
+    "main.js": "/funbox-test/static/js/main.757f884a.js",
+    "static/js/787.5515aeb4.chunk.js": "/funbox-test/static/js/787.5515aeb4.chunk.js",
+    "index.html": "/funbox-test/index.html",
+    "main.7a812e17.css.map": "/funbox-test/static/css/main.7a812e17.css.map",
+    "main.757f884a.js.map": "/funbox-test/static/js/main.757f884a.js.map",
+    "787.5515aeb4.chunk.js.map": "/funbox-test/static/js/787.5515aeb4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7a812e17.css",
-    "static/js/main.837b4b70.js"
+    "static/js/main.757f884a.js"
   ]
 }
