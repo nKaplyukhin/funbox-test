@@ -1,14 +1,11 @@
-import { useContext } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { coordContext } from "../../context/coordContext";
+import { ACTION_TYPE } from "../../constants/constant";
 import "./CoordsList.css";
 
-export const CoordsList = () => {
-  const { coord, dragCoord, deleteCoord } = useContext(coordContext);
-
+export const CoordsList = ({ coord, setMap }) => {
   const onDragEnd = (result) => {
     if (!result.destination) return;
-    dragCoord(result);
+    setMap(ACTION_TYPE.drag, result);
   };
 
   return (
@@ -16,7 +13,7 @@ export const CoordsList = () => {
       <Droppable droppableId="droppable">
         {(provided) => (
           <div
-            className="dragList"
+            className="drag"
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
@@ -24,16 +21,16 @@ export const CoordsList = () => {
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided) => (
                   <div
-                    className="dragItem"
+                    className="drag__item"
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
                     {item.name}
                     <button
-                      className="close"
+                      className="drag__button"
                       onClick={() => {
-                        deleteCoord(item.id);
+                        setMap(ACTION_TYPE.delete, item.id);
                       }}
                     >
                       x

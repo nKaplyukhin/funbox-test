@@ -1,15 +1,34 @@
-import { useContext, useState } from "react";
-import { coordContext } from "../context/coordContext";
+import { useState } from "react";
 import { CoordsList } from "./CoordsList";
 import "./CoordField.css";
+import { useMap } from "../hooks/useMap";
+import { ACTION_TYPE } from "../constants/constant";
 
-export const CoordField = () => {
-  const { addNewCoord, coord } = useContext(coordContext);
+export const Input = ({ map, setMap }) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
 
+  const handleKey = (e) => {
+    setError(false);
+    if (value.length > 0) {
+      if (e.code === "Enter") {
+        let flag = false;
+        map.forEach((item) => {
+          if (item.name === value) {
+            setError(true);
+            flag = true;
+          }
+        });
+        if (!flag) {
+          setMap(ACTION_TYPE.add, value);
+          setValue("");
+        }
+      }
+    }
+  };
+
   return (
-    <div className="coordField">
+    <>
       <input
         className="coordField__input"
         type="text"
@@ -18,29 +37,22 @@ export const CoordField = () => {
         onChange={(e) => {
           setValue(e.currentTarget.value);
         }}
-        onKeyPress={(e) => {
-          setError(false);
-          if (value.length > 0) {
-            if (e.code === "Enter") {
-              let flag = false;
-              coord.forEach((item) => {
-                if (item.name === value) {
-                  setError(true);
-                  flag = true;
-                }
-              });
-              if (!flag) {
-                addNewCoord(value);
-                setValue("");
-              }
-            }
-          }
-        }}
+        onKeyPress={handleKey}
       />
       {error && (
         <div className="coordField__error">данное название используется</div>
       )}
-      <CoordsList />
+    </>
+  );
+};
+
+export const CoordField = ({ refProp }) => {
+  const [map, setMap] = useMap(refProp, [55.73, 37.75]);
+
+  return (
+    <div className="coordField">
+      <Input map={map} setMap={setMap} />
+      <CoordsList coord={map} setMap={setMap} />
     </div>
   );
 };

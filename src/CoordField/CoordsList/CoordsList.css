@@ -1,8 +1,8 @@
-.dragList {
+.drag {
   width: 100%;
 }
 
-.dragItem {
+.drag__item {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -12,7 +12,7 @@
   margin-bottom: 10px;
 }
 
-.close {
+.drag__button {
   outline: none;
   background-color: transparent;
   border: none;

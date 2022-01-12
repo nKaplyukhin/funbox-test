@@ -1,13 +1,14 @@
 import "./App.css";
-import React from "react";
+import React, { useRef } from "react";
 import { CoordField } from "./CoordField";
-import { Map } from "./Map";
 
 const App = () => {
+  const ref = useRef();
+
   return (
     <div className="App">
-      <CoordField />
-      <Map />
+      <CoordField refProp={ref} />
+      <div className="map" ref={ref}></div>
     </div>
   );
 };

@@ -3,13 +3,10 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { CoordContextProvider } from "./context/coordContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <CoordContextProvider>
-      <App />
-    </CoordContextProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

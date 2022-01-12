@@ -1,40 +1,12 @@
-import React, { createContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import nextId from "react-id-generator";
+import { ACTION_TYPE } from "../constants/constant";
+import { reorder } from "../utils/utils";
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
-export const coordContext = createContext([]);
-
-export const CoordContextProvider = ({ children }) => {
+export const useMap = (ref, center) => {
   //массив хранит данные о точках, координаты точек и т.д.
   const [coord, setCoord] = useState([]);
   const [polyline, setPolyline] = useState(null);
-
-  //Инициализация какрты (запускается единожды в useEffect)
-  const initializeMap = (ref) => {
-    const ymaps = window.ymaps;
-    ymaps.ready(() => {
-      const ymaps = window.ymaps;
-      let myMap = new ymaps.Map(
-        ref.current,
-        {
-          center: [55.73, 37.75],
-          zoom: 9,
-        },
-        {
-          searchControlProvider: "yandex#search",
-        }
-      );
-
-      window.myMap = myMap;
-    });
-  };
 
   //меняет местами элементы в массиве при изменении их расположения
   const dragCoord = (result) => {
@@ -81,9 +53,44 @@ export const CoordContextProvider = ({ children }) => {
         return true;
       }
     });
-
     setCoord(items);
   };
+
+  const setMap = (action, data) => {
+    switch (action) {
+      case ACTION_TYPE.drag:
+        dragCoord(data);
+        break;
+      case ACTION_TYPE.add:
+        addNewCoord(data);
+        break;
+      case ACTION_TYPE.delete:
+        deleteCoord(data);
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    //Инициализация какрты (запускается единожды в useEffect)
+    const ymaps = window.ymaps;
+    ymaps.ready(() => {
+      const ymaps = window.ymaps;
+      let myMap = new ymaps.Map(
+        ref.current,
+        {
+          center,
+          zoom: 9,
+        },
+        {
+          searchControlProvider: "yandex#search",
+        }
+      );
+
+      window.myMap = myMap;
+    });
+  }, []);
 
   //При каждой перерисовке, если в этом есть необходимость, будет перерисована polyline
   useEffect(() => {
@@ -104,10 +111,11 @@ export const CoordContextProvider = ({ children }) => {
       );
 
       window.myMap.geoObjects.add(myPolyline);
+
       setPolyline(myPolyline);
     }
 
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coord]);
 
   useEffect(() => {
@@ -124,6 +132,7 @@ export const CoordContextProvider = ({ children }) => {
           };
         } else return item;
       });
+
       setCoord(newItems);
     };
 
@@ -137,19 +146,8 @@ export const CoordContextProvider = ({ children }) => {
         item.placemark.events.remove("dragend", updateCoord);
       });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coord]);
 
-  return (
-    <coordContext.Provider
-      value={{
-        coord,
-        deleteCoord,
-        addNewCoord,
-        dragCoord,
-        initializeMap,
-      }}
-    >
-      {children}
-    </coordContext.Provider>
-  );
+  return [coord, setMap];
 };
