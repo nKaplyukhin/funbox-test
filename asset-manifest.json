@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/funbox-test/static/css/main.7a812e17.css",
-    "main.js": "/funbox-test/static/js/main.757f884a.js",
+    "main.css": "/funbox-test/static/css/main.fe31ac38.css",
+    "main.js": "/funbox-test/static/js/main.3e7eae58.js",
     "static/js/787.5515aeb4.chunk.js": "/funbox-test/static/js/787.5515aeb4.chunk.js",
     "index.html": "/funbox-test/index.html",
-    "main.7a812e17.css.map": "/funbox-test/static/css/main.7a812e17.css.map",
-    "main.757f884a.js.map": "/funbox-test/static/js/main.757f884a.js.map",
+    "main.fe31ac38.css.map": "/funbox-test/static/css/main.fe31ac38.css.map",
+    "main.3e7eae58.js.map": "/funbox-test/static/js/main.3e7eae58.js.map",
     "787.5515aeb4.chunk.js.map": "/funbox-test/static/js/787.5515aeb4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7a812e17.css",
-    "static/js/main.757f884a.js"
+    "static/css/main.fe31ac38.css",
+    "static/js/main.3e7eae58.js"
   ]
 }
