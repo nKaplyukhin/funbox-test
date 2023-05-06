@@ -1,8 +1,28 @@
 import { useState } from "react";
-import { CoordsList } from "./CoordsList";
-import "./CoordField.css";
 import { useMap } from "../hooks/useMap";
 import { ACTION_TYPE } from "../constants/constant";
+import styled from "styled-components";
+import { CoordsList } from "./CoordsList";
+
+const StyledCoordField = styled("div")`
+  position: relative;
+  width: 100%;
+  padding-top: 10px;
+  margin-right: 20px;
+  max-width: 150px;
+`;
+
+const StyledInput = styled("input")`
+  width: 100%;
+  margin-bottom: 20px;
+`;
+
+const StyledError = styled("error")`
+  font-size: 12px;
+  color: red;
+  font-weight: bold;
+  margin-bottom: 20px;
+`;
 
 export const Input = ({ map, setMap }) => {
   const [value, setValue] = useState("");
@@ -29,8 +49,7 @@ export const Input = ({ map, setMap }) => {
 
   return (
     <>
-      <input
-        className="coordField__input"
+      <StyledInput
         type="text"
         value={value}
         placeholder="Введите название точки"
@@ -39,9 +58,7 @@ export const Input = ({ map, setMap }) => {
         }}
         onKeyPress={handleKey}
       />
-      {error && (
-        <div className="coordField__error">данное название используется</div>
-      )}
+      {error && <StyledError>данное название используется</StyledError>}
     </>
   );
 };
@@ -50,9 +67,9 @@ export const CoordField = ({ refProp }) => {
   const [map, setMap] = useMap(refProp, [55.73, 37.75]);
 
   return (
-    <div className="coordField">
+    <StyledCoordField>
       <Input map={map} setMap={setMap} />
       <CoordsList coord={map} setMap={setMap} />
-    </div>
+    </StyledCoordField>
   );
 };

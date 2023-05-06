@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import nextId from "react-id-generator";
 import { ACTION_TYPE } from "../constants/constant";
 import { reorder } from "../utils/utils";
@@ -7,6 +7,7 @@ export const useMap = (ref, center) => {
   //массив хранит данные о точках, координаты точек и т.д.
   const [coord, setCoord] = useState([]);
   const [polyline, setPolyline] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   //меняет местами элементы в массиве при изменении их расположения
   const dragCoord = (result) => {
@@ -74,7 +75,10 @@ export const useMap = (ref, center) => {
 
   useEffect(() => {
     //Инициализация какрты (запускается единожды в useEffect)
+    if (isLoaded) return;
+
     const ymaps = window.ymaps;
+
     ymaps.ready(() => {
       const ymaps = window.ymaps;
       let myMap = new ymaps.Map(
@@ -87,9 +91,11 @@ export const useMap = (ref, center) => {
           searchControlProvider: "yandex#search",
         }
       );
-
+      setIsLoaded(true);
       window.myMap = myMap;
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //При каждой перерисовке, если в этом есть необходимость, будет перерисована polyline
